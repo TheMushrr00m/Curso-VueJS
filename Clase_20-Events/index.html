@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Getting event data from the event object</title>
+  </head>
+  <body>
+    <div id="exercise">
+      <button type="button" v-on:click="increase($event, 4)">Click me</button>
+      <p>{{counter}}</p>
+      <p v-on:mousemove="updateCoordinates">
+        Coordinates: {{x}} / {{y}}
+        <!-- De esta forma el método stopPropagation del event object. -->
+        - <span v-on:mousemove.stop="">DEAD SPOT</span>
+      </p>
+      <!-- Muestra una alerta cuando se presiona y suelta la barra de espacio o [ENTER] -->
+      <input type="text" v-on:keyup.enter.space="alertMe" />
+    </div>
+
+    <script src="../vue.js"></script>
+    <script type="text/javascript">
+      new Vue({
+        el: '#exercise',
+        data: {
+          counter: 0,
+          x: 0,
+          y: 0
+        },
+        methods: {
+          increase: function(event, step) {
+            this.counter += step;
+          },
+          updateCoordinates: function(event) {
+            this.x = event.clientX;
+            this.y = event.clientY;
+          },
+          alertMe: function() {
+            alert("Alert");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dynamic Styling with CSS Classes</title>
+    <style>
+      .demo {
+        width: 100px;
+        height: 100px;
+        background-color: gray;
+        display: inline-block;
+        margin: 10px;
+      }
+      .red {background-color: red;}
+      .green {background-color: green;}
+      .blue {background-color: blue;}
+    </style>
+  </head>
+  <body>
+    <div id="exercise">
+      <!-- Utilizando la versión con computed properties -->
+      <div
+        class="demo"
+        @click="attachRed = !attachRed"
+        :class="divClasses">
+      </div>
+      <div class="demo" :class="{red: attachRed}"></div>
+      <!-- Se utiliza la notación de array para poner clases con diferentes notaciones -->
+      <div class="demo" :class="[color, {red: attachRed}]"></div>
+      <!-- Si se quiere utilizar la notación de CSS, se requieren las comillas simples ('')
+      Ejemplo: 'background-color'
+      De lo contrario, sin las comillas se utiliza la notación camelCase -->
+      <div class="demo" :style="{backgroundColor: color}"></div>
+      <!-- O utilizando la versión con computed properties -->
+      <div class="demo" :style="myStyle"></div>
+      <hr>
+      <input type="text" v-model="color">
+      <input type="text" v-model="width">
+    </div>
+
+    <script src="../vue.js"></script>
+    <script type="text/javascript">
+      new Vue({
+        // Connect to DOM
+        el: '#exercise',
+        // Store Data to be used
+        data: {
+          attachRed: false,
+          color: 'green',
+          width: 100
+        },
+        //Dependent Properties
+        computed: {
+          divClasses() {
+            return {
+              red: this.attachRed,
+              blue: !this.attachRed
+            };
+          },
+          myStyle() {
+            return {
+              backgroundColor: this.color,
+              width: this.width + 'px'
+            };
+          }
+        },
+        // Execute code upon data changes
+        watch: {
+        },
+        // Methods of this Vue instance
+        methods: {
+        }
+      });
+    </script>
+  </body>
+</html>
